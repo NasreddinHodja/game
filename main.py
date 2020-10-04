@@ -63,7 +63,7 @@ while True:
 
     collisions = player.move(tile_rects)
 
-    if collisions['bottom'] == True:
+    if collisions['bottom'] or collisions['top']:
         player.air_timer = 0
         player.y_momentum = 0
     else:
