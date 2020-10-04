@@ -2,32 +2,32 @@ import pygame, sys
 
 from Player import Player
 
+WINDOW_SIZE = (600,400)
+
+def load_map(path):
+    f = open(path, 'r')
+    data = f.read()
+    f.close()
+
+    data = data.split('\n')
+    game_map = []
+    for row in data:
+        game_map.append(list(row))
+
+    print(game_map)
+    return game_map
+
+game_map = load_map('map.txt')
+
 clock = pygame.time.Clock()
 
-from pygame.locals import *
-pygame.init() # initiates pygame
+pygame.init()
 
 pygame.display.set_caption('Pygame Platformer')
-
-WINDOW_SIZE = (600,400)
 
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32) # initiate the window
 
 display = pygame.Surface((300,200)) # used as the surface for rendering, which is scaled
-
-game_map = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','2','2','2','2','2','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2'],
-            ['1','1','2','2','2','2','2','2','2','2','2','2','2','2','2','2','2','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1']]
 
 grass_img = pygame.image.load('assets/grass.png')
 dirt_img = pygame.image.load('assets/dirt.png')
@@ -73,21 +73,21 @@ while True:
 
 
     for event in pygame.event.get(): # event loop
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
                 player.moving_right = True
-            if event.key == K_LEFT:
+            if event.key == pygame.K_LEFT:
                 player.moving_left = True
-            if event.key == K_UP:
+            if event.key == pygame.K_UP:
                 if player.air_timer < 6:
                     player.y_momentum = -5
-        if event.type == KEYUP:
-            if event.key == K_RIGHT:
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
                 player.moving_right = False
-            if event.key == K_LEFT:
+            if event.key == pygame.K_LEFT:
                 player.moving_left = False
 
     screen.blit(pygame.transform.scale(display,WINDOW_SIZE),(0,0))
