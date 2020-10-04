@@ -1,6 +1,6 @@
 import pygame
 
-class Player:
+class Character:
     def __init__(self, x, y, sprite_path):
         self.x = x
         self.y = y
@@ -61,6 +61,10 @@ class Player:
             self.x_momentum -= self.x_momentum_rate
 
     def move(self, tiles):
+        pass
+
+class Player(Character):
+    def move(self, tiles):
         self.movement = [0,0]
         if self.moving_right:
             self.x_momentum += self.x_momentum_rate
@@ -84,3 +88,34 @@ class Player:
             self.y_momentum = 0
         else:
             self.air_timer += 1
+
+class Enemy(Character):
+    def move(self, tiles):
+        # if randint(0, 1) == 1:
+        #     self.moving_right = True
+        # else:
+        #     self.moving_left = True
+
+        self.movement = [0,0]
+        if self.moving_right:
+            self.x_momentum += self.x_momentum_rate
+            self.x_momentum = min(self.x_momentum, 2)
+        elif self.moving_left == True:
+            self.x_momentum -= self.x_momentum_rate
+            self.x_momentum = max(self.x_momentum, -2)
+        else:
+            self.stop()
+
+        self.movement[0] += self.x_momentum
+        self.movement[1] += self.y_momentum
+        self.y_momentum += self.y_momentum_rate
+        if self.y_momentum > 3:
+            self.y_momentum = 3
+
+        collisions = self.move_collide(tiles)
+
+        if collisions['bottom'] or collisions['top']:
+            self.air_timer = 0
+            self.y_momentum = 0
+        else:
+            pass

@@ -1,6 +1,6 @@
 import pygame, sys
 
-from Player import Player
+from Character import Player, Enemy
 
 WINDOW_SIZE = (600,400)
 
@@ -32,6 +32,7 @@ grass_img = pygame.image.load('assets/grass.png')
 dirt_img = pygame.image.load('assets/dirt.png')
 
 player = Player(10, 10, 'assets/chronomage.png')
+enemy = Enemy(150, 20, 'assets/zombie.png')
 
 scroll = [0, 0]
 
@@ -56,8 +57,10 @@ while True:
         y += 1
 
     player.move(tile_rects)
+    enemy.move(tile_rects)
 
-    display.blit(player.sprite, (player.rect.x-scroll[0],player.rect.y-scroll[1]))
+    display.blit(player.sprite, (player.rect.x-scroll[0], player.rect.y-scroll[1]))
+    display.blit(enemy.sprite, (enemy.rect.x-scroll[0], enemy.rect.y-scroll[1]))
 
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
