@@ -34,13 +34,10 @@ dirt_img = pygame.image.load('assets/dirt.png')
 player = Player(10, 10, 'assets/chronomage.png')
 enemy = Enemy(150, 20, 'assets/zombie.png')
 
-scroll = [0, 0]
+projectiles = []
 
 while True:
     display.fill(0)
-
-    scroll[0] += (player.rect.x-scroll[0]-150) / 20
-    scroll[1] += (player.rect.y-scroll[1]-100) / 20
 
     tile_rects = []
     y = 0
@@ -48,9 +45,9 @@ while True:
         x = 0
         for tile in layer:
             if tile == '1':
-                display.blit(dirt_img,(x*16-int(scroll[0]), y*16-int(scroll[1])))
+                display.blit(dirt_img,(x*16, y*16))
             if tile == '2':
-                display.blit(grass_img,(x*16-int(scroll[0]), y*16-int(scroll[1])))
+                display.blit(grass_img,(x*16, y*16))
             if tile != '0':
                 tile_rects.append(pygame.Rect(x*16,y*16,16,16))
             x += 1
@@ -59,8 +56,24 @@ while True:
     player.move(tile_rects)
     enemy.move(tile_rects)
 
-    player.draw(display, scroll)
-    enemy.draw(display, scroll)
+    player.draw(display)
+    enemy.draw(display)
+
+    arrow_img = pygame.image.load('assets/arrow.png')
+    for arrow in projectiles:
+        if arrow[2] == 0:
+            del arrow
+            continue
+
+        arrow[2] -= 5
+        if arrow[3] == -1:
+            display.blit(arrow_img,
+                         (arrow[0] - (120 - arrow[2]),
+                          arrow[1]))
+        else:
+            display.blit(pygame.transform.flip(arrow_img, True, False),
+                         (arrow[0] + (120 - arrow[2]),
+                          arrow[1]))
 
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
@@ -74,6 +87,11 @@ while True:
             if event.key == pygame.K_SPACE:
                 if player.air_timer < 6:
                     player.y_momentum = -5
+            if event.key == pygame.K_a:
+                projectiles.append([player.rect.x,
+                                    player.rect.y,
+                                    120,
+                                    -player.facing_dir])
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 player.moving_right = False

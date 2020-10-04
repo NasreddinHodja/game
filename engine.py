@@ -61,25 +61,25 @@ class Character:
     def move(self, tiles):
         pass
 
-    def draw_life(self, display, scroll):
-        bg_rect = pygame.Rect((self.rect.x - scroll[0], self.rect.y - scroll[1] - 5,
+    def draw_life(self, display):
+        bg_rect = pygame.Rect((self.rect.x, self.rect.y - 5,
                                self.sprite.get_width(), 1))
-        fg_rect = pygame.Rect((self.rect.x - scroll[0], self.rect.y - scroll[1] - 5,
+        fg_rect = pygame.Rect((self.rect.x, self.rect.y - 5,
                                self.sprite.get_width() * self.life, 1))
         pygame.draw.rect(display, (255, 0, 0), bg_rect)
         pygame.draw.rect(display, (0, 255, 0), fg_rect)
 
-    def draw(self, display, scroll):
+    def draw(self, display):
         if self.facing_dir == -1:
             display.blit(self.sprite,
-                         (self.rect.x - scroll[0],
-                          self.rect.y - scroll[1]))
+                         (self.rect.x,
+                          self.rect.y))
         else:
             display.blit(pygame.transform.flip(self.sprite, True, False),
-                         (self.rect.x - scroll[0],
-                          self.rect.y - scroll[1]))
+                         (self.rect.x,
+                          self.rect.y))
 
-        self.draw_life(display, scroll)
+        self.draw_life(display)
 
 class Player(Character):
     def move(self, tiles):
