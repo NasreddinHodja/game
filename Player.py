@@ -7,6 +7,8 @@ class Player:
         self.sprite = pygame.image.load(sprite_path)
         self.y_momentum = 0
         self.x_momentum = 0
+        self.x_momentum_rate = 0.5
+        self.y_momentum_rate = 0.2
         self.air_timer = 0
         self.moving_right = False
         self.moving_left = False
@@ -52,14 +54,26 @@ class Player:
 
         return collision_types
 
+    def stop(self):
+        if self.x_momentum < 0:
+            self.x_momentum += self.x_momentum_rate
+        elif self.x_momentum > 0:
+            self.x_momentum -= self.x_momentum_rate
+
     def move(self, tiles):
         self.movement = [0,0]
-        if self.moving_right == True:
-            self.movement[0] += 2
-        if self.moving_left == True:
-            self.movement[0] -= 2
+        if self.moving_right:
+            self.x_momentum += self.x_momentum_rate
+            self.x_momentum = min(self.x_momentum, 2)
+        elif self.moving_left == True:
+            self.x_momentum -= self.x_momentum_rate
+            self.x_momentum = max(self.x_momentum, -2)
+        else:
+            self.stop()
+
+        self.movement[0] += self.x_momentum
         self.movement[1] += self.y_momentum
-        self.y_momentum += 0.2
+        self.y_momentum += self.y_momentum_rate
         if self.y_momentum > 3:
             self.y_momentum = 3
 
