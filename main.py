@@ -14,7 +14,6 @@ def load_map(path):
     for row in data:
         game_map.append(list(row))
 
-    print(game_map)
     return game_map
 
 game_map = load_map('map.txt')
@@ -34,8 +33,13 @@ dirt_img = pygame.image.load('assets/dirt.png')
 
 player = Player(10, 10, 'assets/chronomage.png')
 
+scroll = [0, 0]
+
 while True:
     display.fill(0)
+
+    scroll[0] += (player.rect.x-scroll[0]-150) / 20
+    scroll[1] += (player.rect.y-scroll[1]-100) / 20
 
     tile_rects = []
     y = 0
@@ -43,9 +47,9 @@ while True:
         x = 0
         for tile in layer:
             if tile == '1':
-                display.blit(dirt_img,(x*16,y*16))
+                display.blit(dirt_img,(x*16-scroll[0],y*16-scroll[1]))
             if tile == '2':
-                display.blit(grass_img,(x*16,y*16))
+                display.blit(grass_img,(x*16-scroll[0],y*16-scroll[1]))
             if tile != '0':
                 tile_rects.append(pygame.Rect(x*16,y*16,16,16))
             x += 1
@@ -69,7 +73,7 @@ while True:
     else:
         player.air_timer += 1
 
-    display.blit(player.sprite, (player.rect.x,player.rect.y))
+    display.blit(player.sprite, (player.rect.x-scroll[0],player.rect.y-scroll[1]))
 
 
     for event in pygame.event.get(): # event loop
