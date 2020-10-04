@@ -6,6 +6,7 @@ class Player:
         self.y = y
         self.sprite = pygame.image.load(sprite_path)
         self.y_momentum = 0
+        self.x_momentum = 0
         self.air_timer = 0
         self.moving_right = False
         self.moving_left = False
@@ -23,7 +24,7 @@ class Player:
 
         return hit_list
 
-    def check_collisions(self, tiles):
+    def move_collide(self, tiles):
         collision_types = {'top': False,
                            'bottom': False,
                            'right': False,
@@ -51,7 +52,7 @@ class Player:
 
         return collision_types
 
-    def move(self, tile_rects):
+    def move(self, tiles):
         self.movement = [0,0]
         if self.moving_right == True:
             self.movement[0] += 2
@@ -62,7 +63,7 @@ class Player:
         if self.y_momentum > 3:
             self.y_momentum = 3
 
-        collisions = self.check_collisions(tile_rects)
+        collisions = self.move_collide(tiles)
 
         if collisions['bottom'] or collisions['top']:
             self.air_timer = 0

@@ -59,7 +59,6 @@ while True:
 
     display.blit(player.sprite, (player.rect.x-scroll[0],player.rect.y-scroll[1]))
 
-
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
             pygame.quit()
