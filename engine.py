@@ -68,6 +68,11 @@ class Character:
         pygame.draw.rect(display, (255, 0, 0), bg_rect)
         pygame.draw.rect(display, (0, 255, 0), fg_rect)
 
+    def draw(self, display, scroll):
+        display.blit(self.sprite, (self.rect.x - scroll[0],
+                                   self.rect.y - scroll[1]))
+        self.draw_life(display, scroll)
+
 class Player(Character):
     def move(self, tiles):
         self.movement = [0,0]
