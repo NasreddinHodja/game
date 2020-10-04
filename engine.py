@@ -10,6 +10,7 @@ class Character:
         self.air_timer = 0
         self.moving_right = False
         self.moving_left = False
+        self.facing_dir = -1
         self.movement = [0, 0]
         self.rect = pygame.Rect((x, y, self.sprite.get_width(),
                                  self.sprite.get_height()))
@@ -69,8 +70,15 @@ class Character:
         pygame.draw.rect(display, (0, 255, 0), fg_rect)
 
     def draw(self, display, scroll):
-        display.blit(self.sprite, (self.rect.x - scroll[0],
-                                   self.rect.y - scroll[1]))
+        if self.facing_dir == -1:
+            display.blit(self.sprite,
+                         (self.rect.x - scroll[0],
+                          self.rect.y - scroll[1]))
+        else:
+            display.blit(pygame.transform.flip(self.sprite, True, False),
+                         (self.rect.x - scroll[0],
+                          self.rect.y - scroll[1]))
+
         self.draw_life(display, scroll)
 
 class Player(Character):
@@ -79,9 +87,11 @@ class Player(Character):
         if self.moving_right:
             self.x_momentum += self.x_momentum_rate
             self.x_momentum = min(self.x_momentum, 2)
+            self.facing_dir = -1
         elif self.moving_left == True:
             self.x_momentum -= self.x_momentum_rate
             self.x_momentum = max(self.x_momentum, -2)
+            self.facing_dir = 1
         else:
             self.stop()
 
