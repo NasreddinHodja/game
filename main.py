@@ -1,6 +1,6 @@
 import pygame, sys
 
-from Character import Player, Enemy
+from engine import Player, Enemy
 
 WINDOW_SIZE = (600,400)
 

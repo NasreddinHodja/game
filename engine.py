@@ -17,6 +17,7 @@ class Character:
                                  self.y,
                                  self.sprite.get_width(),
                                  self.sprite.get_height()))
+        self.life = 10
 
     def collides(self, tiles):
         hit_list = []
