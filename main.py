@@ -60,6 +60,8 @@ while True:
     enemy.move(tile_rects)
 
     display.blit(player.sprite, (player.rect.x-scroll[0], player.rect.y-scroll[1]))
+    player.draw_life(display, scroll)
+    enemy.draw_life(display, scroll)
     display.blit(enemy.sprite, (enemy.rect.x-scroll[0], enemy.rect.y-scroll[1]))
 
     for event in pygame.event.get(): # event loop

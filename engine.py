@@ -2,8 +2,6 @@ import pygame
 
 class Character:
     def __init__(self, x, y, sprite_path):
-        self.x = x
-        self.y = y
         self.sprite = pygame.image.load(sprite_path)
         self.y_momentum = 0
         self.x_momentum = 0
@@ -13,11 +11,9 @@ class Character:
         self.moving_right = False
         self.moving_left = False
         self.movement = [0, 0]
-        self.rect = pygame.Rect((self.x,
-                                 self.y,
-                                 self.sprite.get_width(),
+        self.rect = pygame.Rect((x, y, self.sprite.get_width(),
                                  self.sprite.get_height()))
-        self.life = 10
+        self.life = 1
 
     def collides(self, tiles):
         hit_list = []
@@ -63,6 +59,14 @@ class Character:
 
     def move(self, tiles):
         pass
+
+    def draw_life(self, display, scroll):
+        bg_rect = pygame.Rect((self.rect.x - scroll[0], self.rect.y - scroll[1] - 5,
+                               self.sprite.get_width(), 1))
+        fg_rect = pygame.Rect((self.rect.x - scroll[0], self.rect.y - scroll[1] - 5,
+                               self.sprite.get_width() * self.life, 1))
+        pygame.draw.rect(display, (255, 0, 0), bg_rect)
+        pygame.draw.rect(display, (0, 255, 0), fg_rect)
 
 class Player(Character):
     def move(self, tiles):
