@@ -1,6 +1,6 @@
 import pygame, sys
 
-from engine import Player, Enemy
+from engine import *
 
 WINDOW_SIZE = (600,400)
 
@@ -59,21 +59,12 @@ while True:
     player.draw(display)
     enemy.draw(display)
 
-    arrow_img = pygame.image.load('assets/arrow.png')
     for arrow in projectiles:
-        if arrow[2] == 0:
+        if arrow.frames_left <= 0:
             del arrow
             continue
+        arrow.draw(display)
 
-        arrow[2] -= 5
-        if arrow[3] == -1:
-            display.blit(arrow_img,
-                         (arrow[0] - (120 - arrow[2]),
-                          arrow[1]))
-        else:
-            display.blit(pygame.transform.flip(arrow_img, True, False),
-                         (arrow[0] + (120 - arrow[2]),
-                          arrow[1]))
 
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
@@ -88,10 +79,9 @@ while True:
                 if player.air_timer < 6:
                     player.y_momentum = -5
             if event.key == pygame.K_a:
-                projectiles.append([player.rect.x,
-                                    player.rect.y,
-                                    120,
-                                    -player.facing_dir])
+                projectiles.append(Projectile(player.rect.x,
+                                              player.rect.y,
+                                              -player.facing_dir))
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 player.moving_right = False
