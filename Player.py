@@ -23,7 +23,7 @@ class Player:
 
         return hit_list
 
-    def move(self, tiles):
+    def check_collisions(self, tiles):
         collision_types = {'top': False,
                            'bottom': False,
                            'right': False,
@@ -50,3 +50,22 @@ class Player:
                 collision_types['top'] = True
 
         return collision_types
+
+    def move(self, tile_rects):
+        self.movement = [0,0]
+        if self.moving_right == True:
+            self.movement[0] += 2
+        if self.moving_left == True:
+            self.movement[0] -= 2
+        self.movement[1] += self.y_momentum
+        self.y_momentum += 0.2
+        if self.y_momentum > 3:
+            self.y_momentum = 3
+
+        collisions = self.check_collisions(tile_rects)
+
+        if collisions['bottom'] or collisions['top']:
+            self.air_timer = 0
+            self.y_momentum = 0
+        else:
+            self.air_timer += 1

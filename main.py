@@ -47,31 +47,15 @@ while True:
         x = 0
         for tile in layer:
             if tile == '1':
-                display.blit(dirt_img,(x*16-scroll[0],y*16-scroll[1]))
+                display.blit(dirt_img,(x*16-int(scroll[0]), y*16-int(scroll[1])))
             if tile == '2':
-                display.blit(grass_img,(x*16-scroll[0],y*16-scroll[1]))
+                display.blit(grass_img,(x*16-int(scroll[0]), y*16-int(scroll[1])))
             if tile != '0':
                 tile_rects.append(pygame.Rect(x*16,y*16,16,16))
             x += 1
         y += 1
 
-    player.movement = [0,0]
-    if player.moving_right == True:
-        player.movement[0] += 2
-    if player.moving_left == True:
-        player.movement[0] -= 2
-    player.movement[1] += player.y_momentum
-    player.y_momentum += 0.2
-    if player.y_momentum > 3:
-        player.y_momentum = 3
-
-    collisions = player.move(tile_rects)
-
-    if collisions['bottom'] or collisions['top']:
-        player.air_timer = 0
-        player.y_momentum = 0
-    else:
-        player.air_timer += 1
+    player.move(tile_rects)
 
     display.blit(player.sprite, (player.rect.x-scroll[0],player.rect.y-scroll[1]))
 
@@ -85,7 +69,7 @@ while True:
                 player.moving_right = True
             if event.key == pygame.K_LEFT:
                 player.moving_left = True
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_SPACE:
                 if player.air_timer < 6:
                     player.y_momentum = -5
         if event.type == pygame.KEYUP:
