@@ -21,7 +21,7 @@ class Character:
 
     def damage(self, dmg):
         now = time.time()
-        if now - self.last_dmg < 0.5:
+        if now - self.last_dmg < 0.3:
             return
 
         self.last_dmg = now
