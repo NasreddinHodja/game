@@ -164,7 +164,7 @@ class Projectile:
         self.facing_dir = facing_dir
 
     def draw(self, display):
-        self.frames_left -= 3
+        self.frames_left -= 1
         if self.facing_dir == -1:
             self.rect.x -= (30 - self.frames_left)
             display.blit(self.sprite,
@@ -183,3 +183,15 @@ class Projectile:
                 hit_list.append(enemy)
 
         return hit_list
+
+def load_map(path):
+    f = open(path, 'r')
+    data = f.read()
+    f.close()
+
+    data = data.split('\n')
+    game_map = []
+    for row in data:
+        game_map.append(list(row))
+
+    return game_map

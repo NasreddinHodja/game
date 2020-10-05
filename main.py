@@ -4,18 +4,6 @@ from engine import *
 
 WINDOW_SIZE = (600,400)
 
-def load_map(path):
-    f = open(path, 'r')
-    data = f.read()
-    f.close()
-
-    data = data.split('\n')
-    game_map = []
-    for row in data:
-        game_map.append(list(row))
-
-    return game_map
-
 def main():
 
     game_map = load_map('map.txt')
