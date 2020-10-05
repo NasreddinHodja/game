@@ -36,7 +36,8 @@ enemy = Enemy(150, 20, 'assets/zombie.png')
 
 projectiles = []
 
-while True:
+running = True
+while running:
     display.fill(0)
 
     tile_rects = []
@@ -53,23 +54,38 @@ while True:
             x += 1
         y += 1
 
-    player.move(tile_rects)
-    enemy.move(tile_rects)
-
-    player.draw(display)
-    enemy.draw(display)
+    enemies = []
+    enemies.append(enemy)
 
     for arrow in projectiles:
         if arrow.frames_left <= 0:
             del arrow
             continue
         arrow.draw(display)
+        hits = arrow.collides(enemies)
+        for hit in hits:
+            hit.damage(0.2)
 
+    for e in enemies:
+        if e.collides([player.rect]):
+            player.damage(0.2)
+
+    for e in enemies:
+        if e.life == 0:
+            del e
+            continue
+        e.move(tile_rects)
+        e.draw(display)
+
+    if player.life == 0:
+        running = False
+
+    player.move(tile_rects)
+    player.draw(display)
 
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 player.moving_right = True
@@ -91,3 +107,5 @@ while True:
     screen.blit(pygame.transform.scale(display,WINDOW_SIZE),(0,0))
     pygame.display.update()
     clock.tick(60)
+
+pygame.quit()

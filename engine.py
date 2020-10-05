@@ -16,6 +16,10 @@ class Character:
                                  self.sprite.get_height()))
         self.life = 1
 
+    def damage(self, dmg):
+        self.life -= dmg
+        self.life = max(self.life, 0)
+
     def collides(self, tiles):
         hit_list = []
         for tile in tiles:
@@ -153,10 +157,20 @@ class Projectile:
     def draw(self, display):
         self.frames_left -= 5
         if self.facing_dir == -1:
+            self.rect.x -= (120 - self.frames_left)
             display.blit(self.sprite,
-                         (self.rect.x - (120 - self.frames_left),
+                         (self.rect.x,
                           self.rect.y))
         else:
+            self.rect.x += (120 - self.frames_left)
             display.blit(pygame.transform.flip(self.sprite, True, False),
-                         (self.rect.x + (120 - self.frames_left),
+                         (self.rect.x,
                           self.rect.y))
+
+    def collides(self, enemies):
+        hit_list = []
+        for enemy in enemies:
+            if self.rect.colliderect(enemy.rect):
+                hit_list.append(enemy)
+
+        return hit_list
