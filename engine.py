@@ -146,7 +146,7 @@ class Enemy(Character):
 
 class Projectile:
     def __init__(self, x, y, facing_dir):
-        self.frames_left = 120
+        self.frames_left = 30
         self.sprite = pygame.image.load('assets/arrow.png')
         self.rect = pygame.Rect(x,
                                 y,
@@ -155,14 +155,14 @@ class Projectile:
         self.facing_dir = facing_dir
 
     def draw(self, display):
-        self.frames_left -= 5
+        self.frames_left -= 3
         if self.facing_dir == -1:
-            self.rect.x -= (120 - self.frames_left)
+            self.rect.x -= (30 - self.frames_left)
             display.blit(self.sprite,
                          (self.rect.x,
                           self.rect.y))
         else:
-            self.rect.x += (120 - self.frames_left)
+            self.rect.x += (30 - self.frames_left)
             display.blit(pygame.transform.flip(self.sprite, True, False),
                          (self.rect.x,
                           self.rect.y))
