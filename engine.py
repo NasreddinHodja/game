@@ -1,3 +1,5 @@
+import time
+
 import pygame
 
 class Character:
@@ -15,8 +17,15 @@ class Character:
         self.rect = pygame.Rect((x, y, self.sprite.get_width(),
                                  self.sprite.get_height()))
         self.life = 1
+        self.last_dmg = 0
 
     def damage(self, dmg):
+        now = time.time()
+        if now - self.last_dmg < 0.5:
+            return
+
+        self.last_dmg = now
+
         self.life -= dmg
         self.life = max(self.life, 0)
 
