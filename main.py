@@ -14,7 +14,7 @@ def main():
 
     pygame.display.set_caption('Pygame Platformer')
 
-    screen = pygame.display.set_mode(WINDOW_SIZE,0,32) # initiate the window
+    screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32) # initiate the window
 
     display = pygame.Surface((400, 400)) # used as the surface for rendering, which is scaled
 
@@ -40,7 +40,7 @@ def main():
                 if tile == '2':
                     display.blit(grass_img,(x*16, y*16))
                 if tile != '0':
-                    tile_rects.append(pygame.Rect(x*16,y*16,16,16))
+                    tile_rects.append(pygame.Rect(x*16, y*16, 16, 16))
                 x += 1
             y += 1
 
@@ -86,8 +86,8 @@ def main():
                         player.y_momentum = -5
                 if event.key == pygame.K_a:
                     projectiles.append(Projectile(player.rect.x,
-                                                player.rect.y,
-                                                -player.facing_dir))
+                                                  player.rect.y,
+                                                  -player.facing_dir))
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     player.moving_right = False
