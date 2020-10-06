@@ -18,10 +18,11 @@ class Character:
                                  self.sprite.get_height()))
         self.life = 1
         self.last_dmg = 0
+        self.dmg_time_interval = 0.3
 
     def damage(self, dmg):
         now = time.time()
-        if now - self.last_dmg < 0.3:
+        if now - self.last_dmg < self.dmg_time_interval:
             return
 
         self.last_dmg = now
@@ -123,6 +124,7 @@ class Player(Character):
             self.air_timer += 1
 
 class Enemy(Character):
+
     def move(self, tiles):
         # if randint(0, 1) == 1:
         #     self.moving_right = True

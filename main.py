@@ -21,7 +21,7 @@ def main():
     grass_img = pygame.image.load('assets/grass.png')
     dirt_img = pygame.image.load('assets/dirt.png')
 
-    player = Player(10, 10, 'assets/chronomage.png')
+    player = Player(20, 20, 'assets/chronomage.png')
     enemy = Enemy(150, 20, 'assets/zombie.png')
 
     projectiles = []
