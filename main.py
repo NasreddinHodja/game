@@ -2,7 +2,7 @@ import pygame, sys
 
 from engine import *
 
-WINDOW_SIZE = (600,400)
+WINDOW_SIZE = (800, 800)
 
 def main():
 
@@ -16,7 +16,7 @@ def main():
 
     screen = pygame.display.set_mode(WINDOW_SIZE,0,32) # initiate the window
 
-    display = pygame.Surface((300,200)) # used as the surface for rendering, which is scaled
+    display = pygame.Surface((400, 400)) # used as the surface for rendering, which is scaled
 
     grass_img = pygame.image.load('assets/grass.png')
     dirt_img = pygame.image.load('assets/dirt.png')
