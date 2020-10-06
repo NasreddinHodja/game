@@ -84,7 +84,7 @@ def main():
                 if event.key == pygame.K_SPACE:
                     if player.air_timer < 6:
                         player.y_momentum = -5
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_f:
                     projectiles.append(Projectile(player.rect.x,
                                                   player.rect.y,
                                                   -player.facing_dir))
