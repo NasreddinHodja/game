@@ -12,7 +12,7 @@ class Food:
 
     def show(self, display):
         pygame.draw.rect(display, self.color,
-                         (self.x, self.y, self.scale, self.scale))
+                         (self.x, self.y, self.scale - 2, self.scale - 2))
 
-    def collides(self, snake_head):
-        return self.rect.colliderect(snake_head)
+    def collides(self, snake):
+        return self.x == snake.x and self.y == snake.y

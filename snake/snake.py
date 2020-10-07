@@ -2,8 +2,8 @@ import pygame
 
 class Snake:
     def __init__(self):
-        self.x = 1
-        self.y = 1
+        self.x = 10
+        self.y = 10
         self.x_speed = 10
         self.y_speed = 0
         self.color = (255, 0, 0)
@@ -32,15 +32,12 @@ class Snake:
 
         self.head = pygame.Rect((self.x, self.y, self.scale, self.scale))
 
-        print(self.tail)
-
-
     def show(self, display):
         pygame.draw.rect(display, self.color,
-                         (self.x, self.y, self.scale, self.scale))
+                         (self.x, self.y, self.scale - 3, self.scale - 3))
         for pos in self.tail:
             pygame.draw.rect(display, self.color,
-                             (pos[0], pos[1], self.scale, self.scale))
+                             (pos[0], pos[1], self.scale - 3, self.scale - 3))
 
     def move(self, x, y):
         self.x_speed = x * self.scale
