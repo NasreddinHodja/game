@@ -1,8 +1,11 @@
 import pygame
 
 from snake import Snake
+from food import Food
 
 def main():
+    scale = 10
+
     pygame.init()
 
     display = pygame.display.set_mode((400, 400), 0, 32)
@@ -10,6 +13,7 @@ def main():
     # display = pygame.Suface((400, 400))
 
     snake = Snake()
+    food = Food()
 
     running = True
     while running:
@@ -29,11 +33,16 @@ def main():
                 elif event.key == pygame.K_DOWN:
                     snake.move(0, 1)
 
+        if food.collides(snake.head):
+            food = Food()
+
+        food.show(display)
+
         snake.update()
         snake.show(display)
 
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(10)
 
     pygame.quit()
 
