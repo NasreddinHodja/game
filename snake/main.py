@@ -35,6 +35,7 @@ def main():
 
         if food.collides(snake.head):
             food = Food()
+            snake.grow()
 
         food.show(display)
 
