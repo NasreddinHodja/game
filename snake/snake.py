@@ -11,6 +11,12 @@ class Snake:
         self.head = pygame.Rect((self.x, self.y, self.scale, self.scale))
         self.tail = []
 
+    def cuts_itself(self):
+        for pos in self.tail:
+            if pos[0] == self.x and pos[1] == self.y:
+                return True
+        return False
+
     def update(self):
         for i in range(len(self.tail) - 1):
             self.tail[i] = self.tail[i + 1]
@@ -34,10 +40,11 @@ class Snake:
 
     def show(self, display):
         pygame.draw.rect(display, self.color,
-                         (self.x, self.y, self.scale - 3, self.scale - 3))
+                         (self.x, self.y, self.scale - 2, self.scale - 2))
+
         for pos in self.tail:
             pygame.draw.rect(display, self.color,
-                             (pos[0], pos[1], self.scale - 3, self.scale - 3))
+                             (pos[0], pos[1], self.scale - 2, self.scale - 2))
 
     def move(self, x, y):
         self.x_speed = x * self.scale

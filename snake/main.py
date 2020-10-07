@@ -24,13 +24,17 @@ def main():
                 running = False
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if (event.key == pygame.K_RIGHT and
+                    not (snake.x_speed == -1 * snake.scale)):
                     snake.move(1, 0)
-                elif event.key == pygame.K_LEFT:
+                elif (event.key == pygame.K_LEFT and
+                      not (snake.x_speed == 1 * snake.scale)):
                     snake.move(-1, 0)
-                elif event.key == pygame.K_UP:
+                elif (event.key == pygame.K_UP and
+                      not (snake.y_speed == 1 * snake.scale)):
                     snake.move(0, -1)
-                elif event.key == pygame.K_DOWN:
+                elif (event.key == pygame.K_DOWN and
+                      not (snake.y_speed == -1 * snake.scale)):
                     snake.move(0, 1)
 
         if food.collides(snake.head):
