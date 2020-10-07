@@ -46,6 +46,9 @@ def main():
         snake.update()
         snake.show(display)
 
+        if snake.cuts_itself():
+            running = False
+
         pygame.display.update()
         clock.tick(10)
 
