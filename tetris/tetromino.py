@@ -1,7 +1,5 @@
-from random import randint
-
 class Tetromino:
-    def __init__(self):
+    def __init__(self, x, y, tet):
         self.tetrominos = [
             # I
             [[0, 1, 0, 0],
@@ -49,6 +47,16 @@ class Tetromino:
             (242, 66, 245)
         ]
 
-        self.tet = self.tetrominos[randint(0, len(self.tetrominos))]
+        self.tetromino = self.tetrominos[tet]
 
-        
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        s = ''
+        for i in range(len(self.tetromino)):
+            s += f'{self.tetromino[i]}'
+            # for j in range(len(self.tetromino[i])):
+            if i < len(self.tetromino) - 1:
+                s += '\n'
+        return s
