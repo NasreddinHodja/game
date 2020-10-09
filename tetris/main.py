@@ -51,7 +51,7 @@ def draw_board(display):
         for j in range(len(board[i])):
             rect = (j, i, 1, 1)
 
-            for k in range(len(COLOR)):
+            for k in range(1, len(COLOR)):
                 if(board[i][j] == k):
                     pygame.draw.rect(display, COLOR[k], rect)
 
@@ -62,10 +62,17 @@ def main():
     display = pygame.Surface((int(WINDOW_SIZE[0] / 20),
                               int(WINDOW_SIZE[1] / 20)))
 
+    tet = Tetromino(tet=randint(0, 5))
     running = True
     while running:
         display.fill(0)
 
+        if not tet.falling:
+            tet = Tetromino(tet=randint(0, 5))
+
+        if tet.can_fall(board): tet.fall()
+
+        tet.draw(display)
         draw_board(display)
 
         for event in pygame.event.get():
@@ -74,7 +81,7 @@ def main():
 
         screen.blit(pygame.transform.scale(display, WINDOW_SIZE), (25, 25))
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(6)
 
     pygame.quit()
 
